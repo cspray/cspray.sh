@@ -1,0 +1,11 @@
+installPackages=(
+  man
+  git
+  vim
+  zsh
+  pass
+  starship
+  php
+  signal-desktop
+  telegram-desktop
+)

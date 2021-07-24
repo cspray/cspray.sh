@@ -3,7 +3,7 @@ installPackages=(
   git
   vim
   zsh
-  pass
+  gopass
   starship
   php
   signal-desktop

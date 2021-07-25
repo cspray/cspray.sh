@@ -1,0 +1,11 @@
+#!/bin/bash
+
+source ./functions.sh
+
+echo "Setting zsh as default shell... "
+sudo chsh -s /bin/zsh "$USER"
+echo -ne "\033[2A"
+echo -ne "\033[J"
+echo -ne "\033[1A"
+echo -ne "\033[32C"
+print_success_mark

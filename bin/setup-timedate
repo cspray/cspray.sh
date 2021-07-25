@@ -1,3 +1,8 @@
 #!/bin/bash
-timedatectl set-timezone America/New_York
-timedatectl set-ntp true
+
+source ./functions.sh
+
+echo -n "Setting timezone and automatic time sync... "
+sudo timedatectl set-timezone America/New_York
+sudo timedatectl set-ntp true
+print_success_mark

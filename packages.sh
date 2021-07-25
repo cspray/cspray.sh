@@ -1,16 +1,31 @@
-installPackages=(
+# List the packages you'd like to have installed
+# This list of packages assumes you're installing on a fresh ArchLinux install with minimal applications installed
+# If a package listed is already installed it will NOT be reinstalled
+declare -a install_packages
+install_packages=(
+  # Base Linux packages
   man
-  git
+  vim
   ark
   xclip
-  vim
+
+  # Our preferred shell and shell customizations
   zsh
-  gopass
+  starship
+
+  # Development tools and programming languages
   docker
   postgresql
-  starship
   php
+
+  # Web Browsers
+  firefox
+
+  # Communication programs
   signal-desktop
   telegram-desktop
-  
+
+  # End-user terminal applications
+  gopass
 )
+export install_packages

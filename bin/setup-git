@@ -1,16 +1,82 @@
 #!/bin/bash
 
-echo "Setting up the global .gitignore file located at ~/.gitignore..."
-touch "$HOME/.gitignore"
-echo "." >> "$HOME/.gitignore"
-echo ".." >> "$HOME/.gitignore"
-echo ".idea" >> "$HOME/.gitignore"
-git config --global core.excludesfile "$HOME/.gitignore"
+source ./functions.sh
 
-echo "Configuring global git user name..."
+echo -n "Setting global .gitignore... "
+if [ -f "$HOME/.gitignore" ]; then
+  print_success_mark
+  echo -e "\tGlobal gitignore file already exists. Will not modify!"
+else
+  touch "$HOME/.gitignore"
+  {
+    echo '.'
+    echo '..'
+    echo '.idea'
+  } >> "$HOME/.gitignore"
+  git config --global core.excludesfile "$HOME/.gitignore"
+  print_success_mark
+fi
+
+echo -n "Configuring global git user name... "
 git config --global user.name "Charles Sprayberry"
+print_success_mark
 
-read "You will now need to add the created SSH key to GitHub. Press Enter to put the contents of the public key in your clipboard."
+echo -n "Now, add key to GitHub. Press Enter to copy public key into clipboard... "
+read -r CONTINUE
 xclip -selection clipboard < "$HOME/.ssh/id_ed25519.pub"
+echo -ne "\033[1A"
+echo -ne "\033[73C"
+print_success_mark
 
-read "After the key has been successfully added to GitHub press Enter."
+echo -n "After key has been added to GitHub press Enter... "
+read -r CONTINUE
+echo -ne "\033[1A"
+echo -ne "\033[50C"
+print_success_mark
+
+printf '' | xclip -selection clipboard
+
+if [ -f "./repos.sh" ]; then
+  source "./repos.sh"
+
+  echo "Starting ssh-agent to clone git repos... "
+
+  eval "$(ssh-agent -s)"
+  ssh-add -q "$HOME/.ssh/id_ed25519"
+
+  echo -ne "\033[2A"
+  echo -ne "\033[J"
+  echo -ne "\033[1A"
+  echo -ne "\033[41C"
+  print_success_mark
+
+  for repo in "${clone_repos[@]}"; do
+    IFS='/' read -ra org_repo <<< "$repo"
+    org="${org_repo[0]}"
+    gh_repo="${org_repo[1]}"
+    if [ ! -d "$HOME/Documents/dev-work/$org" ]; then
+      mkdir -p "$HOME/Documents/dev-work/$org"
+    fi
+
+    echo -n "Cloning $org/$gh_repo... "
+    if [ -d "$HOME/Documents/dev-work/$org/$gh_repo" ]; then
+      print_success_mark
+      echo -e "\t$HOME/Documents/dev-work/$org/$gh_repo already exists. The repository will not be cloned."
+    else
+      git clone -q "git@github.com:$org/$gh_repo" "$HOME/Documents/dev-work/$org/$gh_repo"
+      print_success_mark
+      org_email=${org_email_map[$org]}
+      echo -n "Setting email address for $org/$gh_repo to $org_email... "
+      (cd "$HOME/Documents/dev-work/$org/$gh_repo" && git config user.email "$org_email")
+      print_success_mark
+    fi
+  done
+
+  echo "Ending ssh-agent... "
+  eval "$(ssh-agent -k)"
+  echo -ne "\033[1A"
+  echo -ne "\033[J"
+  echo -ne "\033[1A"
+  echo -ne "\033[20C"
+  print_success_mark
+fi

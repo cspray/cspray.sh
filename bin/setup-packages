@@ -1,0 +1,11 @@
+#!/bin/bash
+
+source ./functions.sh
+source ./packages.sh
+
+echo "Installing configured packages..."
+sudo pacman -Sy --noconfirm --noprogressbar --needed ${install_packages[*]} &> /dev/null
+echo -ne "\033[2K"
+echo -ne "\033[1A"
+echo -ne "\033[34C"
+print_success_mark

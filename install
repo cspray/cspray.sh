@@ -6,21 +6,30 @@ cat ./ascii/cspray-arch-kde.txt
 echo ""
 echo ""
 
-echo "Starting to install and configure your ArchLinux distribution to be configured according to the opinions of cspray!"
+# Give the user a chance to cancel out of the installation process
+echo -n "Will configure your ArchLinux KDE distribution in"
+counter=5
+while [ $counter -ge 1 ]; do
+  echo -n " ... $counter"
+  if [ $counter -eq 1 ]; then
+    echo "!"
+  fi
+  sleep 1
+  ((counter--))
+done
 
-source ./packages.sh
-# Make sure our scripting language of choice is installed
-sudo pacman -Syq --noconfirm --noprogressbar --needed ${installPackages[*]}
-
-echo "Finished installing necessary packages!"
-echo "Starting to configure your installation..."
+echo "Validating sudo credentials for package installation, timedatectl access, and other privileged tasks!"
+sudo --validate
+echo ""
+echo "Here. We. Go!"
 echo ""
 
+./bin/setup-packages
 ./bin/setup-timedate
 ./bin/setup-credentials
-
-# TODO make sure git config is setup: default user name, default global gitignore
-# TODO make sure spray-zsh is setup with default plugins
+./bin/setup-git
+./bin/setup-spray-zsh
+# TODO setup gopass
 
 # We need to echo out a blank line so zsh doesn't output an erroneous % sign
 echo ""

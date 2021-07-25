@@ -9,6 +9,11 @@ install_packages=(
   ark
   xclip
 
+  # Improved command line apps and replacements
+  jq
+  exa
+  bat
+
   # Our preferred shell and shell customizations
   zsh
   starship

@@ -24,11 +24,20 @@ echo ""
 echo "Here. We. Go!"
 echo ""
 
-./bin/setup-packages
-./bin/setup-timedate
-./bin/setup-credentials
-./bin/setup-git
-./bin/setup-spray-zsh
+setup_scripts=(
+  setup-packages
+  setup-timedate
+  setup-credentials
+  setup-git
+  setup-spray-zsh
+)
+
+for setup_script in ${setup_scripts[*]}; do
+  if ! "./bin/${setup_script}"; then
+    echo "Encountered unexpected errors running ${setup_script}!"
+    exit $?
+  fi
+done
 # TODO setup gopass
 
 # We need to echo out a blank line so zsh doesn't output an erroneous % sign

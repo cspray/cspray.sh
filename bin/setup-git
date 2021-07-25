@@ -3,7 +3,7 @@
 source ./functions.sh
 
 echo -n "Setting global .gitignore... "
-if [ -f "$HOME/.gitignore" ]; then
+if [[ -f $HOME/.gitignore ]]; then
   print_success_mark
   echo -e "\tGlobal gitignore file already exists. Will not modify!"
 else
@@ -21,22 +21,54 @@ echo -n "Configuring global git user name... "
 git config --global user.name "Charles Sprayberry"
 print_success_mark
 
-echo -n "Now, add key to GitHub. Press Enter to copy public key into clipboard... "
-read -r CONTINUE
-xclip -selection clipboard < "$HOME/.ssh/id_ed25519.pub"
-echo -ne "\033[1A"
-echo -ne "\033[73C"
-print_success_mark
+if [[ -f /run/media/$USER/Secure_Key/github_token.txt ]]; then
+  echo -n "Setting up SSH key on GitHub... "
+  github_token=$(<"/run/media/$USER/Secure_Key/github_token.txt")
+  ssh_keys=$(curl --silent \
+    -H "Authorization: token $github_token" \
+    -H "Accept: application/vnd.github.v3+json" \
+    https://api.github.com/user/keys)
+  stored_key_titles=$(echo "$ssh_keys" | jq -r ".[] | .title")
+  hostname=$(</etc/hostname)
+  is_stored=0
+  for stored_key_title in ${stored_key_titles[*]}; do
+    if [[ $hostname == "$stored_key_title" ]]; then
+      is_stored=1
+    fi
+  done
 
-echo -n "After key has been added to GitHub press Enter... "
-read -r CONTINUE
-echo -ne "\033[1A"
-echo -ne "\033[50C"
-print_success_mark
+  if [[ $is_stored == 1 ]]; then
+    print_success_mark
+    echo -e "\tA key for \"$hostname\" is already present on GitHub. Please manually validate this key."
+  else
+    ssh_key=$(<"$HOME/.ssh/id_ed25519.pub")
+    $(curl --silent \
+      -X POST \
+      -H "Authorization: token $github_token" \
+      -H "Accept: application/vnd.github.v3+json" \
+      -d "{\"title\": \"$hostname\", \"key\": \"$ssh_key\"}" \
+      https://api.github.com/user/keys)
+    print_success_mark
+  fi
+else
+  echo -n "Now, add key to GitHub. Press Enter to copy public key into clipboard... "
+  read -r CONTINUE
+  xclip -selection clipboard < "$HOME/.ssh/id_ed25519.pub"
+  echo -ne "\033[1A"
+  echo -ne "\033[73C"
+  print_success_mark
 
-printf '' | xclip -selection clipboard
+  echo -n "After key has been added to GitHub press Enter... "
+  read -r CONTINUE
+  echo -ne "\033[1A"
+  echo -ne "\033[50C"
+  print_success_mark
 
-if [ -f "./repos.sh" ]; then
+  printf '' | xclip -selection clipboard
+fi
+
+exit_code=0
+if [[ -f ./repos.sh ]]; then
   source "./repos.sh"
 
   echo "Starting ssh-agent to clone git repos... "
@@ -63,12 +95,17 @@ if [ -f "./repos.sh" ]; then
       print_success_mark
       echo -e "\t$HOME/Documents/dev-work/$org/$gh_repo already exists. The repository will not be cloned."
     else
-      git clone -q "git@github.com:$org/$gh_repo" "$HOME/Documents/dev-work/$org/$gh_repo"
-      print_success_mark
-      org_email=${org_email_map[$org]}
-      echo -n "Setting email address for $org/$gh_repo to $org_email... "
-      (cd "$HOME/Documents/dev-work/$org/$gh_repo" && git config user.email "$org_email")
-      print_success_mark
+      if ! git clone -q "git@github.com:$org/$gh_repo" "$HOME/Documents/dev-work/$org/$gh_repo" &> /dev/null; then
+        print_failure_mark
+        echo -e "\tUnable to clone $org/$gh_repo. Please ensure appropriate SSH key has been configured."
+        exit_code=255
+      else
+        print_success_mark
+        org_email=${org_email_map[$org]}
+        echo -n "Setting email address for $org/$gh_repo to $org_email... "
+        (cd "$HOME/Documents/dev-work/$org/$gh_repo" && git config user.email "$org_email")
+        print_success_mark
+      fi
     fi
   done
 
@@ -79,4 +116,6 @@ if [ -f "./repos.sh" ]; then
   echo -ne "\033[1A"
   echo -ne "\033[20C"
   print_success_mark
+
+  exit $exit_code
 fi

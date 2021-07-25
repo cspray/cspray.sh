@@ -42,12 +42,12 @@ if [[ -f /run/media/$USER/Secure_Key/github_token.txt ]]; then
     echo -e "\tA key for \"$hostname\" is already present on GitHub. Please manually validate this key."
   else
     ssh_key=$(<"$HOME/.ssh/id_ed25519.pub")
-    $(curl --silent \
+    curl --silent \
       -X POST \
       -H "Authorization: token $github_token" \
       -H "Accept: application/vnd.github.v3+json" \
       -d "{\"title\": \"$hostname\", \"key\": \"$ssh_key\"}" \
-      https://api.github.com/user/keys)
+      https://api.github.com/user/keys &> /dev/null
     print_success_mark
   fi
 else

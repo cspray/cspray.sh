@@ -1,0 +1,16 @@
+#!/bin/bash
+
+echo "Setting up the global .gitignore file located at ~/.gitignore..."
+touch "$HOME/.gitignore"
+echo "." >> "$HOME/.gitignore"
+echo ".." >> "$HOME/.gitignore"
+echo ".idea" >> "$HOME/.gitignore"
+git config --global core.excludesfile "$HOME/.gitignore"
+
+echo "Configuring global git user name..."
+git config --global user.name "Charles Sprayberry"
+
+read "You will now need to add the created SSH key to GitHub. Press Enter to put the contents of the public key in your clipboard."
+xclip -selection clipboard < "$HOME/.ssh/id_ed25519.pub"
+
+read "After the key has been successfully added to GitHub press Enter."

@@ -16,6 +16,7 @@ echo "Finished installing necessary packages!"
 echo "Starting to configure your installation..."
 echo ""
 
+./bin/setup-timedate
 ./bin/setup-credentials
 
 # TODO make sure git config is setup: default user name, default global gitignore

@@ -1,5 +1,7 @@
 #!/bin/bash
 
+source ./functions.sh
+
 # Output our ASCII banner showing that we're running cspray.sh
 cat ./ascii/cspray-arch-kde.txt
 
@@ -21,8 +23,8 @@ echo
 
 setup_scripts=(
   sanity-check
-  setup-credentials
   setup-packages
+  setup-credentials
   setup-timedate
   setup-git
   setup-spray-zsh
@@ -30,7 +32,7 @@ setup_scripts=(
 
 for setup_script in ${setup_scripts[*]}; do
   if ! "./bin/${setup_script}"; then
-    echo -e "\e[31mEncountered unexpected errors running ${setup_script}!\e[0m"
+    print_error "Encountered unexpected errors running ${setup_script}!"
     exit $?
   fi
 done

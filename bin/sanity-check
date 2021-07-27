@@ -1,9 +1,36 @@
 #!/bin/bash
 
-if [[ ! -d "/run/media/$USER/Secure_Key" ]]; then
-  echo -e "\e[31mWarning! Could not locate secure credentials at /run/media/$USER/Secure_Key. Please ensure the appropriate"
-  echo -e "USB drive has been inserted and mounted at the correct location.\e[0m"
+source ./functions.sh
+
+if ! is_arch_linux; then
+  print_error "Warning! This script currently only supports ArchLinux or derivatives that report being ArchLinux-like."
+  print_error "Please ensure that your /etc/os-release information is correct and you're running an Arch install."
   echo
   exit 255
 fi
 
+if ! is_kde; then
+  print_error "Warning! This script currently only supports setting up a KDE desktop environment. Please ensure that"
+  print_error "you're running KDE and that your \$XDG_CURRENT_DESKTOP is reporting the correct value."
+  echo
+  exit 255
+fi
+
+if [[ ! -d "/run/media/$USER/Secure_Key" ]]; then
+  print_error "Warning! Could not locate secure credentials at /run/media/$USER/Secure_Key. Please ensure the appropriate"
+  print_error "USB drive has been inserted and mounted at the correct location."
+  echo
+  exit 255
+fi
+
+echo "Validating sudo credentials for package installation, timedatectl access, and other privileged tasks!"
+sudo --validate
+if [[ $? != 0 ]]; then
+  print_error "Warning! Could not validate sudo credentials!"
+  echo
+  exit 255
+fi
+
+echo
+echo "Here. We. Go!"
+echo

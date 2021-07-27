@@ -6,8 +6,13 @@ install_packages=(
   # Base Linux packages
   man
   vim
-  ark
   xclip
+
+  # KDE specific utilities and apps
+  ark
+
+  # Package management tools
+  yay
 
   # Improved command line apps and replacements
   jq

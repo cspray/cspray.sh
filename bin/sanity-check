@@ -1,0 +1,9 @@
+#!/bin/bash
+
+if [[ ! -d "/run/media/$USER/Secure_Key" ]]; then
+  echo -e "\e[31mWarning! Could not locate secure credentials at /run/media/$USER/Secure_Key. Please ensure the appropriate"
+  echo -e "USB drive has been inserted and mounted at the correct location.\e[0m"
+  echo
+  exit 255
+fi
+

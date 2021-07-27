@@ -5,3 +5,9 @@ print_success_mark() {
 print_failure_mark() {
   echo -e "\e[31m\u2716\e[0m"
 }
+
+os_info() {
+  declare -A os_info_map
+
+  echo "${os_info_map[*]}"
+}

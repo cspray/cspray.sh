@@ -3,8 +3,7 @@
 # Output our ASCII banner showing that we're running cspray.sh
 cat ./ascii/cspray-arch-kde.txt
 
-echo ""
-echo ""
+echo; echo
 
 # Give the user a chance to cancel out of the installation process
 echo -n "Will configure your ArchLinux KDE distribution in"
@@ -18,27 +17,24 @@ while [ $counter -ge 1 ]; do
   ((counter--))
 done
 
-echo "Validating sudo credentials for package installation, timedatectl access, and other privileged tasks!"
-sudo --validate
-echo ""
-echo "Here. We. Go!"
-echo ""
+echo
 
 setup_scripts=(
+  sanity-check
+  setup-credentials
   setup-packages
   setup-timedate
-  setup-credentials
   setup-git
   setup-spray-zsh
 )
 
 for setup_script in ${setup_scripts[*]}; do
   if ! "./bin/${setup_script}"; then
-    echo "Encountered unexpected errors running ${setup_script}!"
+    echo -e "\e[31mEncountered unexpected errors running ${setup_script}!\e[0m"
     exit $?
   fi
 done
 # TODO setup gopass
 
 # We need to echo out a blank line so zsh doesn't output an erroneous % sign
-echo ""
+echo

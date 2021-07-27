@@ -51,17 +51,18 @@ if [[ -f /run/media/$USER/Secure_Key/github_token.txt ]]; then
     print_success_mark
   fi
 else
-  echo -n "Now, add key to GitHub. Press Enter to copy public key into clipboard... "
-  read -r CONTINUE
-  xclip -selection clipboard < "$HOME/.ssh/id_ed25519.pub"
-  echo -ne "\033[1A"
-  echo -ne "\033[73C"
-  print_success_mark
+  echo ""
+  echo -e "\e[33mCould not find credentials necessary to communicate with GitHub! You will need to ensure the SSH key for this "
+  echo "host has been properly configured in GitHub. The appropriate SSH key has been copied into your clipboard. Press "
+  echo -e "Enter when SSH has been configured.\e[0m"
+  echo ""
+  echo -n "GitHub SSH key manually configured... "
 
-  echo -n "After key has been added to GitHub press Enter... "
+  xclip -selection clipboard < "$HOME/.ssh/id_ed25519.pub"
+
   read -r CONTINUE
   echo -ne "\033[1A"
-  echo -ne "\033[50C"
+  echo -ne "\033[38C"
   print_success_mark
 
   printf '' | xclip -selection clipboard

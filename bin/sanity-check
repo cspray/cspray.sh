@@ -22,15 +22,3 @@ if [[ ! -d "/run/media/$USER/Secure_Key" ]]; then
   echo
   exit 255
 fi
-
-echo "Validating sudo credentials for package installation, timedatectl access, and other privileged tasks!"
-sudo --validate
-if [[ $? != 0 ]]; then
-  print_error "Warning! Could not validate sudo credentials!"
-  echo
-  exit 255
-fi
-
-echo
-echo "Here. We. Go!"
-echo

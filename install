@@ -8,7 +8,7 @@ cat ./ascii/cspray-arch-kde.txt
 echo; echo
 
 # Give the user a chance to cancel out of the installation process
-echo -n "Will configure your ArchLinux KDE distribution in"
+echo -n "Will configure your distribution in"
 counter=5
 while [ $counter -ge 1 ]; do
   echo -n " ... $counter"
@@ -23,6 +23,7 @@ echo
 
 setup_scripts=(
   sanity-check
+  setup-sudo
   setup-packages
   setup-credentials
   setup-timedate

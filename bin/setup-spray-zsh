@@ -4,6 +4,11 @@ source ./functions.sh
 
 echo "Setting zsh as default shell... "
 sudo chsh -s /bin/zsh "$USER"
+if [[ $? != 0 ]]; then
+  print_error "Encountered error changing the default shell"
+  echo
+  exit 255
+fi
 echo -ne "\033[2A"
 echo -ne "\033[J"
 echo -ne "\033[1A"

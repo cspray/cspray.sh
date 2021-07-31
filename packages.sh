@@ -1,8 +1,9 @@
 # List the packages you'd like to have installed
 # This list of packages assumes you're installing on a fresh ArchLinux install with minimal applications installed
 # If a package listed is already installed it will NOT be reinstalled
-declare -a install_packages
-install_packages=(
+declare -a pacman_packages
+declare -a aur_packages
+pacman_packages=(
   # Base Linux packages
   man
   vim
@@ -38,4 +39,9 @@ install_packages=(
   # End-user terminal applications
   gopass
 )
-export install_packages
+export pacman_packages
+
+aur_packages=(
+  phpstorm-jre
+  phpstorm
+)

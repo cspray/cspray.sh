@@ -45,3 +45,4 @@ aur_packages=(
   phpstorm-jre
   phpstorm
 )
+export aur_packages

@@ -28,7 +28,7 @@ setup_scripts=(
   setup-credentials
   setup-timedate
   setup-git
-  setup-spray-zsh
+  setup-oh-my-zsh
 )
 
 for setup_script in ${setup_scripts[*]}; do

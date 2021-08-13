@@ -37,7 +37,6 @@ for setup_script in ${setup_scripts[*]}; do
     exit $?
   fi
 done
-# TODO setup gopass
 
 # We need to echo out a blank line so zsh doesn't output an erroneous % sign
 echo

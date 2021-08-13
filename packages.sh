@@ -5,6 +5,7 @@ declare -a pacman_packages
 declare -a aur_packages
 pacman_packages=(
   # Base Linux packages
+  curl
   man
   vim
   xclip
@@ -31,18 +32,24 @@ pacman_packages=(
 
   # Web Browsers
   firefox
+  chromium
 
   # Communication programs
   signal-desktop
   telegram-desktop
 
   # End-user terminal applications
-  gopass
+  pass
 )
 export pacman_packages
 
 aur_packages=(
   phpstorm-jre
   phpstorm
+  intellij-idea-ultimate-edition-jre
+  intellij-idea-ultimate-edition
+  pycharm-professional
+  datagrip-jre
+  datagrip
 )
 export aur_packages

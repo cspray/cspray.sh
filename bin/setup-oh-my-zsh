@@ -2,4 +2,4 @@
 
 source ./functions.sh
 
-echo "Under construction! "
+sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended

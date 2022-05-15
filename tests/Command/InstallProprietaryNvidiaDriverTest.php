@@ -2,11 +2,13 @@
 
 namespace Cspray\SprayShell\Command;
 
-use Cspray\SprayShell\Service\ShellExecutor;
+use Cspray\SprayShell\ServiceStub\MockShellExecutor;
 use function Cspray\SprayShell\getTestContainer;
 
 beforeEach(function() {
-    $this->command = getTestContainer()->make(InstallProprietaryNvidiaDriver::class);
+    $this->container = getTestContainer();
+    $this->mockExecutor = $this->container->get(MockShellExecutor::class);
+    $this->command = $this->container->make(InstallProprietaryNvidiaDriver::class);
 });
 
 it('has the correct name', function() {
@@ -23,4 +25,8 @@ it('has no arguments', function() {
 
 it('has no options', function() {
     expect($this->command->getDefinition()->getOptions())->toBeEmpty();
+});
+
+it('executes command to check-update, has error status when updates available', function() {
+
 });

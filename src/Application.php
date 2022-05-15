@@ -3,6 +3,7 @@
 namespace Cspray\SprayShell;
 
 use Cspray\AnnotatedContainer\AutowireableFactory;
+use Cspray\SprayShell\Command\InstallProprietaryNvidiaDriver;
 use Symfony\Component\Console\Application as ConsoleApplication;
 
 final class Application extends ConsoleApplication {
@@ -13,7 +14,7 @@ final class Application extends ConsoleApplication {
     }
 
     private function init() : void {
-        // we'll add commands here later
+        $this->add($this->factory->make(InstallProprietaryNvidiaDriver::class));
     }
 
 }

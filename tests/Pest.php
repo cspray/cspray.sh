@@ -1,5 +1,7 @@
 <?php
 
+namespace Cspray\SprayShell;
+
 /*
 |--------------------------------------------------------------------------
 | Test Case
@@ -23,3 +25,22 @@
 |
 */
 
+use Cspray\AnnotatedContainer\AutowireableFactory;
+use Cspray\AnnotatedContainer\ContainerDefinitionCompileOptionsBuilder as CompileOptionsBuilder;
+use Cspray\AnnotatedContainer\ContainerFactoryOptionsBuilder as FactoryOptionsBuilder;
+use Cspray\AnnotatedContainer\HasBackingContainer;
+use Psr\Container\ContainerInterface;
+use function Cspray\AnnotatedContainer\compiler;
+use function Cspray\AnnotatedContainer\containerFactory;
+
+function getTestContainer() : ContainerInterface&AutowireableFactory&HasBackingContainer {
+    $rootDir = dirname(__DIR__);
+    $containerDef = compiler()->compile(CompileOptionsBuilder::scanDirectories(
+        $rootDir . '/src',
+        $rootDir . '/tests/ServiceStub'
+    )->build());
+    return containerFactory()->createContainer(
+        $containerDef,
+        FactoryOptionsBuilder::forActiveProfiles('default', 'test')->build()
+    );
+}

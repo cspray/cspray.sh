@@ -3,10 +3,10 @@
 namespace Cspray\SprayShell\Command;
 
 use Cspray\SprayShell\Service\ShellExecutor;
+use function Cspray\SprayShell\getTestContainer;
 
 beforeEach(function() {
-    $this->mockExecutor = $this->getMockBuilder(ShellExecutor::class)->getMock();
-    $this->command = new InstallProprietaryNvidiaDriver($this->mockExecutor);
+    $this->command = getTestContainer()->make(InstallProprietaryNvidiaDriver::class);
 });
 
 it('has the correct name', function() {

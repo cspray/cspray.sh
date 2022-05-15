@@ -13,6 +13,7 @@ final class InstallProprietaryNvidiaDriver extends Command {
 
     protected function configure() {
         $this->setName('install:nvidia-driver');
+        $this->setDescription('Installs the latest proprietary nvidia driver for newer GPUs.');
     }
 
 }

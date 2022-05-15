@@ -12,6 +12,7 @@ final class InstallProprietaryNvidiaDriver extends Command {
     }
 
     protected function configure() {
+        $this->setName('install:nvidia-driver');
     }
 
 }

@@ -1,0 +1,20 @@
+#!/usr/bin/env php
+<?php declare(strict_types=1);
+
+namespace Cspray\SprayShell;
+
+use Cspray\AnnotatedContainer\ContainerDefinitionCompileOptionsBuilder as CompileOptionsBuilder;
+use function Cspray\AnnotatedContainer\compiler;
+use function Cspray\AnnotatedContainer\containerFactory;
+
+$rootDir = dirname(__DIR__);
+require $rootDir . '/vendor/autoload.php';
+
+$containerDef = compiler()->compile(
+    CompileOptionsBuilder::scanDirectories($rootDir . '/src')->build()
+);
+$container = containerFactory()->createContainer($containerDef);
+
+$application = new Application($container);
+$application->run();
+

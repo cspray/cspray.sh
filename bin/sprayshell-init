@@ -1,0 +1,30 @@
+#!/bin/bash
+
+ROOT_DIR=$( dirname "$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )" )
+
+/usr/bin/cat "$ROOT_DIR/ascii/sprayshell-slanted.txt"
+
+source /etc/os-release
+
+if [ "$ID" != "fedora" ]; then
+  echo "Sorry, we only support Fedora 35+ right now. We'll be looking to support more distros later."
+  exit 255
+fi
+
+echo
+echo "Welcome to SprayShell.init! This script ensures your system is updated and prepared to run normal SprayShell commands!"
+echo "We're gonna ask for your sudo credentials so we can upgrade the system and install PHP."
+echo
+
+# Install the remi repo
+sudo dnf install "http://rpms.remirepo.net/fedora/remi-release-$VERSION_ID.rpm" -y
+sudo dnf remove php php-fpm -y
+sudo dnf remove "php*" -y
+sudo dnf module list reset php -y
+sudo dnf module enable php:remi-8.1 -y
+sudo dnf install php-cli php-common php-xdebug php-pcov composer -y
+
+cd "$ROOT_DIR" && composer install
+
+# zsh terminals need a new line
+echo

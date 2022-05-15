@@ -1,0 +1,20 @@
+{
+  "name": "cspray/cspray.sh",
+  "require": {
+    "php": "^8.1",
+    "cspray/annotated-container": "^0.4",
+    "nunomaduro/termwind": "^1.10",
+    "symfony/console": "^6.0",
+    "php-di/php-di": "v7.x-dev"
+  },
+  "autoload": {
+    "psr-4": {
+      "Cspray\\SprayShell\\": "src"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Cspray\\SprayShell\\": "tests"
+    }
+  }
+}

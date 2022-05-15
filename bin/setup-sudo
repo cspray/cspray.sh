@@ -1,8 +1,0 @@
-#!/bin/bash
-
-echo "Validating sudo credentials for package installation, timedatectl access, and other privileged tasks!"
-if ! sudo --validate; then
-  print_error "Warning! Could not validate sudo credentials!"
-  echo
-  exit 255
-fi

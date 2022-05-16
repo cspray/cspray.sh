@@ -8,6 +8,6 @@ use Cspray\SprayShell\Model\ShellExecutionResults;
 #[Service]
 interface ShellExecutor {
 
-    public function execute(string $cmd) : ShellExecutionResults;
+    public function execute(array $cmd) : ShellExecutionResults;
 
 }

@@ -21,7 +21,7 @@ final class MockShellExecutor implements ShellExecutor {
         return $this->mock;
     }
 
-    public function execute(string $cmd) : ShellExecutionResults {
+    public function execute(array $cmd) : ShellExecutionResults {
         return $this->mock->execute($cmd);
     }
 }

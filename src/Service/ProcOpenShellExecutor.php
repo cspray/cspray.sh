@@ -6,9 +6,9 @@ use Cspray\AnnotatedContainer\Attribute\Service;
 use Cspray\SprayShell\Model\ShellExecutionResults;
 
 #[Service(profiles: ['prod'])]
-class ProcOpenShellExecutor implements ShellExecutor {
+final class ProcOpenShellExecutor implements ShellExecutor {
 
-    public function execute(string $cmd) : ShellExecutionResults {
+    public function execute(array $cmd) : ShellExecutionResults {
         // TODO: Implement execute() method.
     }
 

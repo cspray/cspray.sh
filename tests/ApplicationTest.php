@@ -3,7 +3,6 @@
 namespace Cspray\SprayShell;
 
 use Cspray\SprayShell\Command\InstallProprietaryNvidiaDriver;
-use function Cspray\AnnotatedContainer\{compiler, containerFactory};
 
 beforeEach(function() {
     $this->application = getTestContainer()->make(Application::class);

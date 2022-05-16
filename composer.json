@@ -19,7 +19,8 @@
   },
   "require-dev": {
     "pestphp/pest": "^1.21",
-    "mockery/mockery": "^1.5"
+    "mockery/mockery": "^1.5",
+    "symfony/test-pack": "^1.0"
   },
   "config": {
     "allow-plugins": {

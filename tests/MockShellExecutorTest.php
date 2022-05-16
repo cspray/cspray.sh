@@ -21,7 +21,8 @@ it('has a mock returned from getMock', function() {
 
 it('delegates execute to the mock', function() {
     $this->mockExecutor->getMock()
-        ->expects('execute')
+        ->shouldReceive('execute')
+        ->once()
         ->with('test-command')
         ->andReturn(new ShellExecutionResults());
 
@@ -30,7 +31,8 @@ it('delegates execute to the mock', function() {
 
 it('returns execution results from mock', function() {
     $this->mockExecutor->getMock()
-        ->expects('execute')
+        ->shouldReceive('execute')
+        ->once()
         ->with('test-command')
         ->andReturn($expectedResults = new ShellExecutionResults());
 

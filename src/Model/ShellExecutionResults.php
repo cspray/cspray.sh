@@ -4,8 +4,12 @@ namespace Cspray\SprayShell\Model;
 
 class ShellExecutionResults {
 
-    public function getStatusCode() : int {
+    public function __construct(
+        private readonly int $statusCode = 0
+    ) {}
 
+    public function getStatusCode() : int {
+        return $this->statusCode;
     }
 
     public function getOutput() : string {

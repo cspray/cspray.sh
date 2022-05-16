@@ -2,7 +2,11 @@
 
 namespace Cspray\SprayShell\Command;
 
+use Cspray\SprayShell\Application;
+use Cspray\SprayShell\Model\ShellExecutionResults;
 use Cspray\SprayShell\ServiceStub\MockShellExecutor;
+use Mockery\MockInterface;
+use Symfony\Component\Console\Tester\CommandTester;
 use function Cspray\SprayShell\getTestContainer;
 
 beforeEach(function() {
@@ -28,5 +32,16 @@ it('has no options', function() {
 });
 
 it('executes command to check-update, has error status when updates available', function() {
+    /** @var MockInterface $mock */
+    $mock = $this->mockExecutor->getMock();
+    $mock->shouldReceive('execute')
+        ->once()
+        ->with('dnf check-update -y')
+        ->andReturn(new ShellExecutionResults(100));
 
+    $command = (new Application($this->container))->get('install:nvidia-driver');
+    $commandTester = new CommandTester($command);
+    $commandTester->execute(['install:nvidia-driver']);
+
+    expect($commandTester->getStatusCode())->toBe(InstallProprietaryNvidiaDriver::FAILURE);
 });

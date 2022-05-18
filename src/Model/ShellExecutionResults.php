@@ -2,22 +2,24 @@
 
 namespace Cspray\SprayShell\Model;
 
-class ShellExecutionResults {
+final class ShellExecutionResults {
 
     public function __construct(
-        private readonly int $statusCode = 0
+        private readonly int $statusCode,
+        private readonly ?string $output,
+        private readonly ?string $errOutput
     ) {}
 
     public function getStatusCode() : int {
         return $this->statusCode;
     }
 
-    public function getOutput() : string {
-
+    public function getOutput() : ?string {
+        return $this->output;
     }
 
-    public function getErrorOutput() : string {
-
+    public function getErrorOutput() : ?string {
+        return $this->errOutput;
     }
 
 }

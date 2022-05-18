@@ -24,7 +24,7 @@ it('delegates execute to the mock', function() {
         ->shouldReceive('execute')
         ->once()
         ->with(['test-command'])
-        ->andReturn(new ShellExecutionResults());
+        ->andReturn(new ShellExecutionResults(0, null, null));
 
     $this->mockExecutor->execute(['test-command']);
 });
@@ -34,7 +34,7 @@ it('returns execution results from mock', function() {
         ->shouldReceive('execute')
         ->once()
         ->with(['test-command'])
-        ->andReturn($expectedResults = new ShellExecutionResults());
+        ->andReturn($expectedResults = new ShellExecutionResults(0, null, null));
 
     expect($this->mockExecutor->execute(['test-command']))->toBe($expectedResults);
 });

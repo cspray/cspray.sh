@@ -5,7 +5,8 @@
     "cspray/annotated-container": "^0.4",
     "nunomaduro/termwind": "^1.10",
     "symfony/console": "^6.0",
-    "php-di/php-di": "v7.x-dev"
+    "php-di/php-di": "v7.x-dev",
+    "symfony/process": "^6.0"
   },
   "autoload": {
     "psr-4": {
@@ -20,7 +21,8 @@
   "require-dev": {
     "pestphp/pest": "^1.21",
     "mockery/mockery": "^1.5",
-    "symfony/test-pack": "^1.0"
+    "symfony/test-pack": "^1.0",
+    "mikey179/vfsstream": "^1.6"
   },
   "config": {
     "allow-plugins": {

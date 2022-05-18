@@ -44,3 +44,35 @@ function getTestContainer() : ContainerInterface&AutowireableFactory&HasBackingC
         FactoryOptionsBuilder::forActiveProfiles('default', 'test')->build()
     );
 }
+
+function getSprayShellOsReleaseContent() : string {
+    return <<<STRING
+STRING;
+}
+
+function getFedoraOsReleaseContent() : string {
+    return <<<STRING
+NAME="Fedora Linux"
+VERSION="35 (Workstation Edition)"
+ID=fedora
+VERSION_ID=35
+VERSION_CODENAME=""
+PLATFORM_ID="platform:f35"
+PRETTY_NAME="Fedora Linux 35 (Workstation Edition)"
+ANSI_COLOR="0;38;2;60;110;180"
+LOGO=fedora-logo-icon
+CPE_NAME="cpe:/o:fedoraproject:fedora:35"
+HOME_URL="https://fedoraproject.org/"
+DOCUMENTATION_URL="https://docs.fedoraproject.org/en-US/fedora/f35/system-administrators-guide/"
+SUPPORT_URL="https://ask.fedoraproject.org/"
+BUG_REPORT_URL="https://bugzilla.redhat.com/"
+REDHAT_BUGZILLA_PRODUCT="Fedora"
+REDHAT_BUGZILLA_PRODUCT_VERSION=35
+REDHAT_SUPPORT_PRODUCT="Fedora"
+REDHAT_SUPPORT_PRODUCT_VERSION=35
+PRIVACY_POLICY_URL="https://fedoraproject.org/wiki/Legal:PrivacyPolicy"
+VARIANT="Workstation Edition"
+VARIANT_ID=workstation
+STRING;
+
+}

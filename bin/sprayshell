@@ -4,6 +4,7 @@
 namespace Cspray\SprayShell;
 
 use Cspray\AnnotatedContainer\ContainerDefinitionCompileOptionsBuilder as CompileOptionsBuilder;
+use Cspray\AnnotatedContainer\ContainerFactoryOptionsBuilder as FactoryOptionsBuilder;
 use function Cspray\AnnotatedContainer\compiler;
 use function Cspray\AnnotatedContainer\containerFactory;
 
@@ -13,7 +14,10 @@ require $rootDir . '/vendor/autoload.php';
 $containerDef = compiler()->compile(
     CompileOptionsBuilder::scanDirectories($rootDir . '/src')->build()
 );
-$container = containerFactory()->createContainer($containerDef);
+$container = containerFactory()->createContainer(
+    $containerDef,
+    FactoryOptionsBuilder::forActiveProfiles('default', 'prod')->build()
+);
 
 $application = new Application($container);
 $application->run();

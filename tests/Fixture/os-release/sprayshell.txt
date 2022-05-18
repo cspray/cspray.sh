@@ -1,0 +1,13 @@
+NAME="SprayShell Linux"
+PRETTY_NAME="SprayShell Linux 1 (Alpha)"
+VERSION="1 (Alpha)"
+ID=sprayshell
+VERSION_ID=1
+ANSI_COLOR="1;39;3;61;111;181"
+CPE_NAME="cpe:/o:sprayshellproject:sprayshell:1"
+HOME_URL="https://sprayshell.example.com/home"
+SUPPORT_URL="https://sprayshell.example.com/support"
+BUG_REPORT_URL="https://sprayshell.example.com/bug_report"
+PRIVACY_POLICY_URL="https://sprayshell.example.com/privacy"
+VARIANT="SprayShell Alpha Edition"
+VARIANT_ID=alphaedition
